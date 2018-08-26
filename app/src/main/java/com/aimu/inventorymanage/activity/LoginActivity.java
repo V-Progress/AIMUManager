@@ -17,9 +17,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 public class LoginActivity extends BaseActivity {
 
@@ -79,6 +76,7 @@ public class LoginActivity extends BaseActivity {
     public void onDBGetData(List list,boolean isSucc) {
         if(isSucc){
             DialogUtil.show1Btn(this,"登陆成功");
+            jumpActivity(EntryInventoryActivity.class);
         }else{
             DialogUtil.show1Btn(this,"密码错误");
         }

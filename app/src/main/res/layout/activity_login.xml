@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.aimu.inventorymanage.activity.LoginActivity">
+
+    <include layout="@layout/common_title_bar"/>
+
+    <EditText
+        android:text="13032660329"
+        android:inputType="number"
+        android:maxLines="1"
+        android:maxLength="11"
+        android:hint="@string/login_username_hint"
+        android:id="@+id/edt_phonenum_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:text="1234567"
+        android:maxLines="1"
+        android:maxLength="12"
+        android:hint="@string/login_password_hint"
+        android:id="@+id/edt_password_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:id="@+id/cb_auto_login"
+        android:text="@string/login_checkbox_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_singnup_login"
+        android:text="@string/login_button_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
