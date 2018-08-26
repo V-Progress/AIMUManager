@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="theme_main">#008AFF</color>
+    <color name="theme_divider">#FFCACACA</color>
+
+    <!-- 通用-标题栏 -->
+    <color name="title_bg">#FFFFFFFF</color>
+    <color name="title_text">#FF333333</color>
+    <color name="title_sub_bg">#FFE8E8E8</color>
 </resources>

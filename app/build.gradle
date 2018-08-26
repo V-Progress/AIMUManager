@@ -3,6 +3,7 @@ apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.aimu.inventorymanage"
         minSdkVersion 15
@@ -32,10 +33,19 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile files('libs/BmobSDK_3.6.5_20180709.jar')
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //以下SDK开发者请根据需要自行选择
+    //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
+    //3.5.5：请务必查看下面注释[1]
+    //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'cn.bmob.android:bmob-sdk:3.6.3'
+    compile 'cn.bmob.android:http-legacy:1.0'
     testCompile 'junit:junit:4.12'
-    compile files('libs/BmobSDK_3.6.5_20180709.jar')
-    compile 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 }
