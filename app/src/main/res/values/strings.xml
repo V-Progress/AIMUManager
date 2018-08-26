@@ -3,6 +3,7 @@
 
     <!--标题-->
     <string name="login_title">登陆</string>
+    <string name="inven_lentry_title">入库</string>
 
     <!--登陆-->
     <string name="login_username_hint">请输入手机号码</string>

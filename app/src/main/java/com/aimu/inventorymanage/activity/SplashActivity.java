@@ -52,24 +52,4 @@ public class SplashActivity extends BaseActivity implements Animation.AnimationL
     @Override
     public void onAnimationRepeat(Animation animation) {
     }
-
-    @Override
-    public void onDBStart() {
-
-    }
-
-    @Override
-    public void onDBGetData() {
-
-    }
-
-    @Override
-    public void onDBFinish() {
-
-    }
-
-    @Override
-    public void onDBError() {
-
-    }
 }

@@ -16,6 +16,8 @@ import com.aimu.inventorymanage.db.DBCallback;
 import com.aimu.inventorymanage.db.DBController;
 import com.aimu.inventorymanage.view.TitleBar;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import cn.bmob.v3.Bmob;
 
@@ -27,7 +29,7 @@ public abstract class BaseActivity extends Activity implements DBCallback{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        App.getInstance().addActivity(this);
-        Bmob.initialize(this,Const.BMOB_APPID);
+
         setRootView();
         initDBController();
         setActTitle();
@@ -228,7 +230,7 @@ public abstract class BaseActivity extends Activity implements DBCallback{
     }
 
     @Override
-    public void onDBGetData() {
+    public void onDBGetData(List list,boolean b) {
 
     }
 
@@ -238,7 +240,7 @@ public abstract class BaseActivity extends Activity implements DBCallback{
     }
 
     @Override
-    public void onDBError() {
+    public void onDBError(Exception e) {
 
     }
 

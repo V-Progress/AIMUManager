@@ -7,8 +7,10 @@ import android.widget.EditText;
 import com.aimu.inventorymanage.Const.Const;
 import com.aimu.inventorymanage.R;
 import com.aimu.inventorymanage.activity.base.BaseActivity;
+import com.aimu.inventorymanage.db.DBController;
 import com.aimu.inventorymanage.model.User;
 import com.aimu.inventorymanage.utils.DialogUtil;
+import com.aimu.inventorymanage.utils.LogUtil;
 import com.aimu.inventorymanage.utils.ToastUtil;
 
 import java.util.List;
@@ -70,24 +72,26 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        BmobQuery<User> bmobQuery = new BmobQuery<>();
-        bmobQuery.addWhereEqualTo(Const.DB_KEY.KEY_DB_WHERE,phoneNum);
-        bmobQuery.findObjects(new FindListener<User>() {
-            @Override
-            public void done(List<User> list, BmobException e) {
-                if(list == null || list.size()<=0){
-                    ToastUtil.showShort(LoginActivity.this,"未注册");
-                    return;
-                }
+        mDBController.singIn(phoneNum,password);
+    }
 
-                User user = list.get(0);
-                if(!TextUtils.equals(password,user.getUser_password())){
-                    ToastUtil.showShort(LoginActivity.this,"密码错误");
-                    return;
-                }
-                ToastUtil.showShort(LoginActivity.this,"登陆成功");
-                jumpActivity(MainActivity.class);
-            }
-        });
+    @Override
+    public void onDBGetData(List list,boolean isSucc) {
+        if(isSucc){
+            DialogUtil.show1Btn(this,"登陆成功");
+        }else{
+            DialogUtil.show1Btn(this,"密码错误");
+        }
+    }
+
+    @Override
+    public void onDBError(Exception e) {
+        DialogUtil.show1Btn(this,e.getMessage());
+    }
+
+    @Override
+    public void onDBFinish() {
+        super.onDBFinish();
+        LogUtil.e("12131313131212121");
     }
 }

@@ -2,11 +2,23 @@ package com.aimu.inventorymanage.db;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 
+import com.aimu.inventorymanage.Const.Const;
+import com.aimu.inventorymanage.activity.LoginActivity;
+import com.aimu.inventorymanage.activity.MainActivity;
+import com.aimu.inventorymanage.model.User;
+import com.aimu.inventorymanage.utils.ToastUtil;
+
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 public class DBController implements DBControlInterface {
 
@@ -23,7 +35,7 @@ public class DBController implements DBControlInterface {
      */
     private DBCallback callback;
     BmobQuery bmobQuery;
-    private RunApduTask mRunApduTask;
+//    private RunApduTask mRunApduTask;
 
     public DBController(Context mContext, DBCallback callback) {
 
@@ -38,38 +50,79 @@ public class DBController implements DBControlInterface {
         this.callback = callback;
     }
 
-    private class RunApduTask extends AsyncTask<Void,Void,Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            bmobQuery = new BmobQuery();
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
-    }
-
-    public void run(){
-        if (mRunApduTask != null && !mRunApduTask.isCancelled()) {
-            mRunApduTask.cancel(true);
-        }
-//        mRunApduTask = new RunApduTask();
+//    private class RunApduTask<T> extends AsyncTask<BmobObject,Void,User> {
+//
+//        @Override
+//        protected User doInBackground(BmobObject... params) {
+//            BmobQuery<T> bmobQuery = new BmobQuery();
+//            bmobQuery.addWhereEqualTo(Const.DB_KEY.KEY_DB_WHERE,params[0]);
+//
+//            bmobQuery.findObjects(new FindListener<T>() {
+//                @Override
+//                public void done(List<T> list, BmobException e) {
+//                    if(list == null || list.size()<=0){
+//                        callback.onDBError();
+//                    }else{
+//                        callback.onDBGetData();
+//                    }
+//                    callback.onDBFinish();
+//                }
+////                @Override
+////                public void done(List<User> list, BmobException e) {
+////                    if(list == null || list.size()<=0){
+////                        callback.onDBError();
+////                    }else{
+////                        callback.onDBGetData();
+////                    }
+////                    callback.onDBFinish();
+////                }
+//            });
+//
+//            return null;
+//        }
+//    }
+//
+//    public void runDB(BmobObject req) {
+//        if (mRunApduTask != null && !mRunApduTask.isCancelled()) {
+//            mRunApduTask.cancel(true);
+//        }
+//        RunApduTask<BmobObject> mRunApduTask = new RunApduTask<>();
 //        mRunApduTask.executeOnExecutor(SINGLE_TASK_EXECUTOR, req);
-    }
-
+//    }
 
     @Override
     public boolean signUp() {
+
         return false;
     }
 
     @Override
-    public boolean singIn() {
-        return false;
+    public void singIn(final String phoneNum, final String password) {
+        callback.onDBStart();
+        new  AsyncTask<String,Void,Void>(){
+            @Override
+            protected Void doInBackground(String... params) {
+                BmobQuery<User> bmobQuery = new BmobQuery<>();
+                bmobQuery.addWhereEqualTo(Const.DB_KEY.KEY_DB_WHERE,phoneNum);
+                bmobQuery.findObjects(new FindListener<User>() {
+                    @Override
+                    public void done(List<User> list, BmobException e) {
+                        if(e != null){
+                            callback.onDBError(e);
+                        }
+                        if(list == null || list.size()<=0){
+                            callback.onDBError(new Exception("未查到数据"));
+                            callback.onDBFinish();
+                            return;
+                        }
+
+                        callback.onDBGetData(list,TextUtils.equals(password,list.get(0).getUser_password()));
+                        callback.onDBFinish();
+                    }
+                });
+                return null;
+            }
+        }.executeOnExecutor(SINGLE_TASK_EXECUTOR);
     }
 
     @Override

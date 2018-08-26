@@ -12,7 +12,7 @@ public interface DBControlInterface {
      * 登陆
      * @return
      */
-    boolean singIn();
+    void singIn(String phoneNum,String password);
 
     /**
      * 修改用户信息
